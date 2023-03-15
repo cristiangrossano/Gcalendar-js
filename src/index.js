@@ -4,6 +4,7 @@ const process = require("process");
 
 const { authenticate } = require("@google-cloud/local-auth");
 const { google } = require("googleapis");
+const { auth } = require("google-auth-library");
 
 const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 const TOKEN_PATH = path.join(process.cwd(), "token.json");
@@ -63,15 +64,16 @@ async function authorize() {
 }
 
 /**
- * Lists the next 10 events on the user's primary calendar.
+ * Lists the next n_eventi events on the user's primary calendar.
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
+const n_eventi = 5;
 async function listEvents(auth) {
   const calendar = google.calendar({ version: "v3", auth });
   const res = await calendar.events.list({
     calendarId: "primary",
     timeMin: new Date().toISOString(),
-    maxResults: 5,
+    maxResults: n_eventi,
     singleEvents: true,
     orderBy: "startTime",
   });
@@ -80,11 +82,45 @@ async function listEvents(auth) {
     console.log("No upcoming events found.");
     return;
   }
-  console.log("Upcoming 10 events:");
+  console.log(`Prossimi ${n_eventi} eventi in calendario.\n`);
   events.map((event, i) => {
     const start = event.start.dateTime || event.start.date;
-    console.log(`${start} - ${event.summary}`);
+    console.log(start);
+    console.log(`${new Date(start.slice(0, -6))} - ${event.summary}\n`);
   });
 }
 
 authorize().then(listEvents).catch(console.error);
+
+const event = {
+  summary: "Google I/O 2015",
+  location: "800 Howard St., San Francisco, CA 94103",
+  description: "A chance to hear more about Google's developer products.",
+  start: {
+    dateTime: "2023-03-16T12:00:00+01:00",
+    timeZone: "Europe/Rome",
+  },
+  end: {
+    dateTime: "2023-03-16T12:00:00+01:000",
+    timeZone: "Europe/Rome",
+  },
+  recurrence: ["RRULE:FREQ=DAILY;COUNT=2"],
+  attendees: [{ email: "lpage@example.com" }, { email: "sbrin@example.com" }],
+  reminders: {
+    useDefault: false,
+    overrides: [
+      { method: "email", minutes: 24 * 60 },
+      { method: "popup", minutes: 10 },
+    ],
+  },
+};
+
+async function nuovoEvento(auth) {
+  const calendar = google.calendar({ version: "v3", auth });
+  const res = await calendar.events.insert({
+    calendarId: "primary",
+    resource: event,
+  });
+}
+
+authorize().then(nuovoEvento).catch(console.error);
