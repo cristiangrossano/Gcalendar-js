@@ -36,6 +36,7 @@ async function createEvent() {
   const oraFine = await new Promise((resolve) =>
     rl.question("Inserisci l'ora di fine in formato OO:MM", resolve)
   );
+  rl.close();
 
   // evento.start
   evento.start = {};
