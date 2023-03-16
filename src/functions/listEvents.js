@@ -1,3 +1,10 @@
+/**
+ * Function that prints the next numeroRisultati events in the calendar with their date
+ * @param {*} calendar
+ * @param {String} idCalendario
+ * @param {Int} numeroRisultati
+ * @returns
+ */
 async function listaEventi(calendar, idCalendario, numeroRisultati) {
   const res = await calendar.events.list({
     calendarId: idCalendario,
@@ -14,7 +21,6 @@ async function listaEventi(calendar, idCalendario, numeroRisultati) {
   console.log(`Prossimi ${numeroRisultati} eventi in calendario.\n`);
   events.map((event, i) => {
     const start = event.start.dateTime || event.start.date;
-    console.log(start);
     console.log(`${new Date(start.slice(0, -6))} - ${event.summary}\n`);
   });
 }
