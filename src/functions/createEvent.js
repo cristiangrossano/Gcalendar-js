@@ -1,5 +1,5 @@
-const readline = require("readline");
 const moment = require("moment");
+const readline = require("readline");
 
 async function createEvent() {
   const fuso = "Europe/Rome";
@@ -53,7 +53,7 @@ async function createEvent() {
     "DD-MM-YYYYTHH:mm"
   ).toISOString();
   evento.end.timeZone = fuso;
-  console.log(evento);
+
   return evento;
 }
 

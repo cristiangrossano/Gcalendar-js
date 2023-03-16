@@ -1,3 +1,10 @@
+/**
+ * Function that prints the next numeroRisultati events in the calendar with their date
+ * @param {*} calendar
+ * @param {String} idCalendario
+ * @param {Int} numeroRisultati
+ * @returns
+ */
 async function listaEventi(calendar, idCalendario, numeroRisultati) {
   const res = await calendar.events.list({
     calendarId: idCalendario,

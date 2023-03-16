@@ -89,20 +89,19 @@ async function action(auth) {
   rl.question(
     "Cosa vuoi fare?\n1. Visualizzare i prossimi eventi.\n2. Aggiungere un evento.\n",
     async function (scelta) {
+      rl.close();
+
       switch (scelta.trim()) {
         case "1": {
           listaEventi(calendar, "primary", 5);
-          rl.close();
           break;
         }
         case "2": {
           await aggiuntaEvento(calendar, "primary");
-          rl.close();
           break;
         }
         default: {
           console.log("Scelta non valida");
-          rl.close();
           break;
         }
       }
