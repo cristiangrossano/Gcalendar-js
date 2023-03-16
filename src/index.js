@@ -9,8 +9,8 @@ const { listaEventi } = require("./functions/listEvents");
 const { aggiuntaEvento } = require("./functions/addEvent");
 
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
-const TOKEN_PATH = path.join(process.cwd(), "token.json");
-const CREDENTIALS_PATH = path.join(process.cwd(), "credentials.json");
+const TOKEN_PATH = path.join(process.cwd(), "jsons/token.json");
+const CREDENTIALS_PATH = path.join(process.cwd(), "jsons/credentials.json");
 
 /*
 !TODO

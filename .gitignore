@@ -1,5 +1,4 @@
 node_modules
 package-lock.json
-src/credentials.json
-src/token.json
-src/eventexample.json
+src/jsons/credentials.json
+src/jsons/token.json
