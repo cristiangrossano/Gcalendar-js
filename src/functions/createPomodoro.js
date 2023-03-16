@@ -93,7 +93,6 @@ async function createPomodoro() {
         timeZone: fuso,
       };
 
-      evento.end = {};
       dataInizio = moment(dataInizio)
         .add(concentrazione, "minutes")
         .toISOString();
@@ -110,8 +109,6 @@ async function createPomodoro() {
       dateTime: dataInizio,
       timeZone: fuso,
     };
-
-    evento.end = {};
     dataInizio = moment(dataInizio).add(minuti, "minutes").toISOString();
     evento.end = { dateTime: dataInizio, timeZone: fuso };
     dataInizio = moment(dataInizio).add(pausa, "minutes").toISOString();
