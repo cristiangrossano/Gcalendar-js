@@ -24,8 +24,6 @@ const rl = readline.createInterface({
 1. Possibilità di fare un input dell'evento da parte dell'utente
 2. Calcolo del percorso partendo da una location "casa"
 3. Aggiunta di pomodoro timer all'interno del calendario
-
-cancellare dichiarazione oggetto evento in ./functions/addEvent
 */
 
 /**
@@ -98,7 +96,7 @@ async function action(auth) {
           break;
         }
         case "2": {
-          aggiuntaEvento(calendar, "primary");
+          await aggiuntaEvento(calendar, "primary");
           rl.close();
           break;
         }
