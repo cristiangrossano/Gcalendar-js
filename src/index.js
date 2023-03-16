@@ -21,7 +21,6 @@ const rl = readline.createInterface({
 
 /*
 !TODO
-1. Possibilità di fare un input dell'evento da parte dell'utente
 2. Calcolo del percorso partendo da una location "casa"
 3. Aggiunta di pomodoro timer all'interno del calendario
 */
