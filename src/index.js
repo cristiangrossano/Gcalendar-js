@@ -14,17 +14,6 @@ const CREDENTIALS_PATH = path.join(process.cwd(), "jsons/credentials.json");
 const { listaEventi } = require("./functions/listEvents");
 const { aggiuntaEvento } = require("./functions/addEvent");
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-/*
-!TODO
-2. Calcolo del percorso partendo da una location "casa"
-3. Aggiunta di pomodoro timer all'interno del calendario
-*/
-
 /**
  * Reads previously authorized credentials from the save file.
  *
@@ -83,6 +72,11 @@ async function authorize() {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 async function action(auth) {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
   const calendar = google.calendar({ version: "v3", auth });
 
   rl.question(
