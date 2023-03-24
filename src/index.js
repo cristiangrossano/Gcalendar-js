@@ -2,6 +2,7 @@ const fs = require("fs").promises;
 const path = require("path");
 const process = require("process");
 const readline = require("readline");
+const chalk = require("chalk");
 
 const { authenticate } = require("@google-cloud/local-auth");
 const { google } = require("googleapis");
@@ -78,15 +79,22 @@ async function action(auth) {
   });
 
   const calendar = google.calendar({ version: "v3", auth });
-
   rl.question(
-    "Cosa vuoi fare?\n1. Visualizzare i prossimi eventi.\n2. Aggiungere un evento.\n",
+    chalk.green(
+      "Cosa vuoi fare?\n1. Visualizzare i prossimi eventi.\n2. Aggiungere un evento.\n"
+    ),
+
     async function (scelta) {
       rl.close();
-
       switch (scelta.trim()) {
         case "1": {
-          listaEventi(calendar, "primary", 5);
+          rl.question(
+            chalk.blue("Quanti eventi vuoi visualizzare?\n"),
+            async function (nRisultati) {
+              await listaEventi(calendar, "primary", nRisultati.trim());
+              rl.close();
+            }
+          );
           break;
         }
         case "2": {
@@ -94,7 +102,7 @@ async function action(auth) {
           break;
         }
         default: {
-          console.log("Scelta non valida");
+          console.log(chalk.red("Scelta non valida"));
           break;
         }
       }
