@@ -1,10 +1,9 @@
 const chalk = require("chalk");
+
 /**
- * Function that prints the next numeroRisultati events in the calendar with their date
- * @param {*} calendar
+ * Funzione che stampa numeroRisultati eventi dal calendario insieme alla loro data
  * @param {String} idCalendario
  * @param {Int} numeroRisultati
- * @returns
  */
 async function listaEventi(calendar, idCalendario, numeroRisultati) {
   const res = await calendar.events.list({
@@ -17,12 +16,12 @@ async function listaEventi(calendar, idCalendario, numeroRisultati) {
   const events = res.data.items;
   if (!events || events.length === 0) {
     console.log(chalk.red("Nessun evento in programma trovato."));
-    return;
   }
   console.log(
     chalk.blue(`Prossimi ${numeroRisultati} eventi in calendario.\n`)
   );
 
+  //* Print
   events.map((event, i) => {
     const start = event.start.dateTime || event.start.date;
     console.log(

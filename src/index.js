@@ -13,10 +13,10 @@ const CREDENTIALS_PATH = path.join(process.cwd(), "jsons/credentials.json");
 
 // import delle funzioni
 const { listaEventi } = require("./functions/listEvents");
-const { aggiuntaEvento } = require("./functions/addEvent");
+const { aggiuntaEvento } = require("./functions/newEvent");
 
 /**
- * Reads previously authorized credentials from the save file.
+ * Legge le precedenti credenziali che sono state autorizzate dal file salvato.
  *
  * @return {Promise<OAuth2Client|null>}
  */
@@ -31,7 +31,7 @@ async function loadSavedCredentialsIfExist() {
 }
 
 /**
- * Serializes credentials to a file compatible with GoogleAUth.fromJSON.
+ * Serializza le credenziali in un file compatibile con GoogleAUth.fromJSON.
  *
  * @param {OAuth2Client} client
  * @return {Promise<void>}
@@ -50,7 +50,7 @@ async function saveCredentials(client) {
 }
 
 /**
- * Load or request or authorization to call APIs.
+ * Carica o richiede o autorizza la chiamata API.
  *
  */
 async function authorize() {
@@ -69,45 +69,64 @@ async function authorize() {
 }
 
 /**
- * Lists the next n events on the user's primary calendar.
+ * Gestisce eventi nel calendario dell'utente
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ *
  */
 async function action(auth) {
+  const calendar = google.calendar({ version: "v3", auth });
+
+  console.log(chalk.magenta("Benvenuto in " + chalk.blue("Gcalendar") + "."));
+  console.log(
+    chalk.magenta(
+      "Con questo script è possibile visualizzare eventi in Google Calendar e crearne di nuovi."
+    )
+  );
+
+  // apertura scanner
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
 
-  const calendar = google.calendar({ version: "v3", auth });
-  rl.question(
-    chalk.green(
-      "Cosa vuoi fare?\n1. Visualizzare i prossimi eventi.\n2. Aggiungere un evento.\n"
-    ),
+  /**
+   * Funzione che stampa in console le domande e prende in input la scelta
+   *  @returns scelta
+   */
+  function getInput() {
+    return new Promise((resolve) => {
+      rl.question(
+        chalk.magenta(
+          "Cosa vuoi fare?\n1. Visualizzare i prossimi eventi.\n2. Aggiungere un evento.\n0. Per uscire.\n"
+        ),
+        (input) => {
+          resolve(input.trim());
+        }
+      );
+    });
+  }
 
-    async function (scelta) {
+  do {
+    scelta = await getInput();
+
+    if (scelta == "1") {
+      rl.question(
+        chalk.blue("Quanti eventi vuoi visualizzare?\n"),
+        async function (nRisultati) {
+          rl.close();
+          await listaEventi(calendar, "primary", nRisultati.trim());
+        }
+      );
+    } else if (scelta == "2") {
       rl.close();
-      switch (scelta.trim()) {
-        case "1": {
-          rl.question(
-            chalk.blue("Quanti eventi vuoi visualizzare?\n"),
-            async function (nRisultati) {
-              await listaEventi(calendar, "primary", nRisultati.trim());
-              rl.close();
-            }
-          );
-          break;
-        }
-        case "2": {
-          await aggiuntaEvento(calendar, "primary");
-          break;
-        }
-        default: {
-          console.log(chalk.red("Scelta non valida"));
-          break;
-        }
-      }
+      await aggiuntaEvento(calendar, "primary");
+    } else if (scelta != "0") {
+      console.log(chalk.red("ERRORE: Scelta non valida"));
     }
-  );
+  } while (scelta != "0");
+  rl.close();
+  console.log(chalk.magenta("Grazie per aver usato Gcalendar\n"));
 }
 
+//* Esecuzione effettiva
 authorize().then(action).catch(console.error);
