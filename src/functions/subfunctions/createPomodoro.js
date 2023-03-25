@@ -76,9 +76,9 @@ async function createPomodoro() {
   let sessione = parseInt(concentrazione) + parseInt(pausa);
 
   while (minuti > 0) {
-    if (sessione >= minuti && count % 4 == 0) {
+    if (sessione >= minuti && count % 5 == 0) {
       evento = {};
-      evento.summary = nome;
+      evento.summary = `${nome + count}`;
       evento.start = {
         dateTime: dataInizio,
         timeZone: fuso,
@@ -93,12 +93,12 @@ async function createPomodoro() {
       dataInizio = moment(dataInizio).add(pausa, "minutes").toISOString();
       minuti = minuti - sessione;
       eventi.push(evento);
-    } else if (sessione >= minuti && count % 4 != 0) {
+    } else if (sessione >= minuti && count % 5 != 0) {
       dataInizio = moment(dataInizio).add(sessione, "minutes").toISOString();
       minuti = minuti - sessione;
     } else {
       evento = {};
-      evento.summary = nome;
+      evento.summary = `${nome + count}`;
       evento.start = {
         dateTime: dataInizio,
         timeZone: fuso,
