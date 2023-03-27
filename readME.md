@@ -1,11 +1,15 @@
 # Gcalendar
 
-Questo codice si collega a **Google Calendar** per visualizzare i prossimi eventi in programma e aggiungerne di nuovi.
+Questo codice si collega all'API di **Google Calendar** e consente di:
 
-Possibilità di aggiungere eventi in successione organizzando lassi di tempo con intervalli regolari dettati da tempo di concentrazione e pause.
+- visualizzare i prossimi eventi in programma;
+- creare nuovi eventi;
+- creare più eventi in successione basati sulla tipologia di pomodoro timer.
 
-Il codice non ha una interfaccia grafica, ma solo in console.
+Tutto il codice viene eseguito in console.
 
 ## Utilizzo
 
-Per utilizzarlo dentro la cartella **src** bisogna creare una cartella di nome "jsons" con dentro le credenziali ricevute dal developer portal di Google.
+**Come usarlo?**
+
+Muoversi tramite terminale nella cartella "./src" e usare il comando `node .`. Enjoy.

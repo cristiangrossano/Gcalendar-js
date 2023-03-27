@@ -78,7 +78,7 @@ async function createPomodoro() {
   while (minuti > 0) {
     if (sessione >= minuti && count % 5 == 0) {
       evento = {};
-      evento.summary = `${nome + count}`;
+      evento.summary = nome;
       evento.start = {
         dateTime: dataInizio,
         timeZone: fuso,
@@ -98,7 +98,7 @@ async function createPomodoro() {
       minuti = minuti - sessione;
     } else {
       evento = {};
-      evento.summary = `${nome + count}`;
+      evento.summary = nome;
       evento.start = {
         dateTime: dataInizio,
         timeZone: fuso,
