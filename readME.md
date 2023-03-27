@@ -12,4 +12,9 @@ Tutto il codice viene eseguito in console.
 
 **Come usarlo?**
 
-Muoversi tramite terminale nella cartella "./src" e usare il comando `node .`. Enjoy.
+Prima di tutto andare al link di google platform e creare le credenziali perl'API di google calendar, per poi creare una cartella **jsons** nel percorso "./src/jsons" e inserire il file "./src/jsons/credentials.json" che potrà essere scaricato dopo aver generato le credenziali.
+
+Aprire il terminale e usare il comando `npm install` per generare la cartella "./node_modules" e "./package-lock.json" che sono fondamentali.
+Muoversi tramite terminale nella cartella "./src" e usare il comando `node .`.
+
+Enjoy.
